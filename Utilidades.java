@@ -42,45 +42,111 @@ public class Utilidades {
         return numero;
     }
 
-    public static int leenumerofiladel1al8()
+    public static int leenumerofiladel1al8(String filacolumna)
     {
         Scanner teclado = new Scanner(System.in);
         int numero;
         boolean errorLectura = false;
-        do {
-            System.out.println("¿Que fila deseas seleccionar?");
-            numero = teclado.nextInt();
-            if (numero <= 0 || numero>= 9){
-                System.out.println("\033[31mError, solo se acepta los numeros 1 al 8"+"\u001B[0m");
-                errorLectura = true;
+        if (filacolumna.equals("fila")) {
+            do {
+                System.out.println("¿Que fila deseas seleccionar?");
+                numero = teclado.nextInt();
+                if (numero <= 0 || numero >= 9) {
+                    System.out.println("\033[31mError, solo se acepta los numeros 1 al 8" + "\u001B[0m");
+                    errorLectura = true;
+                } else {
+                    errorLectura = false;
+                }
             }
-            else
-            {
-                errorLectura = false;
+            while (errorLectura == true);
+            return numero;
+        }else{
+            do {
+                System.out.println("¿Que columna deseas seleccionar?");
+                numero = teclado.nextInt();
+                if (numero <= 0 || numero>= 9){
+                    System.out.println("\033[31mError, solo se acepta los numeros 1 al 8"+"\u001B[0m");
+                    errorLectura = true;
+                }
+                else
+                {
+                    errorLectura = false;
+                }
             }
+            while (errorLectura == true);
+            return numero;
         }
-        while (errorLectura == true);
-        return numero;
     }
-    public static int leenumerocolumnadel1al8()
+    public static int leenumerofiladel1al14(String filacolumna)
     {
         Scanner teclado = new Scanner(System.in);
         int numero;
         boolean errorLectura = false;
-        do {
-            System.out.println("¿Que columna deseas seleccionar?");
-            numero = teclado.nextInt();
-            if (numero <= 0 || numero>= 9){
-                System.out.println("\033[31mError, solo se acepta los numeros 1 al 8"+"\u001B[0m");
-                errorLectura = true;
+        if (filacolumna.equals("fila")) {
+            do {
+                System.out.println("¿Que fila deseas seleccionar?");
+                numero = teclado.nextInt();
+                if (numero <= 0 || numero >= 15) {
+                    System.out.println("\033[31mError, solo se acepta los numeros 1 al 14" + "\u001B[0m");
+                    errorLectura = true;
+                } else {
+                    errorLectura = false;
+                }
             }
-            else
-            {
-                errorLectura = false;
+            while (errorLectura == true);
+            return numero;
+        }else{
+            do {
+                System.out.println("¿Que columna deseas seleccionar?");
+                numero = teclado.nextInt();
+                if (numero <= 0 || numero>= 15){
+                    System.out.println("\033[31mError, solo se acepta los numeros 1 al 14"+"\u001B[0m");
+                    errorLectura = true;
+                }
+                else
+                {
+                    errorLectura = false;
+                }
             }
+            while (errorLectura == true);
+            return numero;
         }
-        while (errorLectura == true);
-        return numero;
+    }
+    public static int leenumerofiladel1al20
+            (String filacolumna)
+    {
+        Scanner teclado = new Scanner(System.in);
+        int numero;
+        boolean errorLectura = false;
+        if (filacolumna.equals("fila")) {
+            do {
+                System.out.println("¿Que fila deseas seleccionar?");
+                numero = teclado.nextInt();
+                if (numero <= 0 || numero >= 21) {
+                    System.out.println("\033[31mError, solo se acepta los numeros 1 al 20" + "\u001B[0m");
+                    errorLectura = true;
+                } else {
+                    errorLectura = false;
+                }
+            }
+            while (errorLectura == true);
+            return numero;
+        }else{
+            do {
+                System.out.println("¿Que columna deseas seleccionar?");
+                numero = teclado.nextInt();
+                if (numero <= 0 || numero>= 9){
+                    System.out.println("\033[31mError, solo se acepta los numeros 1 al 20"+"\u001B[0m");
+                    errorLectura = true;
+                }
+                else
+                {
+                    errorLectura = false;
+                }
+            }
+            while (errorLectura == true);
+            return numero;
+        }
     }
 
     public static int leeacciondel1al4()
