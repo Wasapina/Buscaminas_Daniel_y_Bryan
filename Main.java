@@ -2,10 +2,13 @@ package tfg;
 import tfg.campo.Campominas;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args){
+        int fila;
+        int columna;
+        int accion;
         boolean salir = false;
-        int eleccion_jugar_registros = Utilidades.leenumerodel1al2();
         do {
+            int eleccion_jugar_registros = Utilidades.leenumerodel1al2();
             switch (eleccion_jugar_registros){
                 case 1:
                     break;
@@ -13,16 +16,31 @@ public class Main {
                     boolean jugando = true;
                     boolean reiniciar = false;
                     do {
-                        int selecdificultad = Utilidades.leenumerodel1al4();
-                        Campominas c1 = new Campominas(selecdificultad);
+                        int selecdificultad = Utilidades.leenumerodel1al4() ;
                         if(selecdificultad != 4){
+                            Campominas c1 = new Campominas(selecdificultad);
                         do {
                             c1.imprimir();
-                            int fila = Utilidades.leenumerofiladel1al8()-1;
-                            int columna = Utilidades.leenumerocolumnadel1al8()-1;
+                            c1.comprueba_final(selecdificultad);
+
+                            if(c1.comprueba_final(selecdificultad) == true){
+                                reiniciar = true;
+                                jugando = true;
+                                salir = false;
+                            }
+
+                            do{fila = Utilidades.leenumerofiladel1al8(selecdificultad)-1;}
+                            while (fila==-1);
+                            do{columna = Utilidades.leenumerocolumnadel1al8(selecdificultad)-1;}
+                            while (columna==-1);
+
                             c1.imprimirconseleccion(fila, columna);
+
                             if(c1.comprobar_x(fila,columna) == true) {
-                                int accion = Utilidades.leeacciondel1al4();
+
+                                do{accion = Utilidades.leeacciondel1al4();}
+                                while(accion == 0);
+
                                 switch (accion) {
                                     case 1:
                                         if (c1.despejar_campo(fila, columna) != true) {
@@ -46,13 +64,11 @@ public class Main {
                         } while (jugando == true);
                         }
                         else{
-                            reiniciar=false;
-                            salir = true;
+                            salir = false;
                         }
                     }while (reiniciar == true);
                     break;
             }
         }while (salir == false);
-
     }
 }
