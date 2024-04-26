@@ -6,6 +6,7 @@ public class Campominas {
     protected String[][] campo;
     protected boolean[][] campominas;
     protected boolean primermov;
+    protected int contadoruni;
 
     /**
      * Constructor de campo, campo minas, banderas , minas y asignacion de minas
@@ -30,12 +31,6 @@ public class Campominas {
                 this.minas = 99;
                 this.campo = new String[20][20];
                 this.campominas = new boolean[20][20];
-                break;
-            case 4:
-                this.minas = 0;
-                this.campo = new String[0][0];
-                this.campominas = new boolean[0][0];
-                System.out.println("Saliendo del juego");
                 break;
         }
 
@@ -130,14 +125,19 @@ public class Campominas {
             return mina_pisada;
         } else {
             if (this.campo[fila][columna].equals("X")) {
-                minas_cerca = minascerca(fila, columna);
-                if (minas_cerca == 0) {
-                    this.campo[fila][columna] = " ";
-                    despejar_vacio(fila, columna);
-                } else {
-                    String reset = "\u001B[0m";
-                    String verde = "\033[32m";
-                    this.campo[fila][columna] = verde + Integer.toString(minas_cerca) + reset;
+                if(primermov == true){
+                    despejar_vacio(fila,columna);
+                }
+                else{
+                    minas_cerca = minascerca(fila, columna);
+                    if (minas_cerca == 0) {
+                        this.campo[fila][columna] = " ";
+                        despejar_vacio(fila, columna);
+                    } else {
+                        String reset = "\u001B[0m";
+                        String verde = "\033[32m";
+                        this.campo[fila][columna] = verde + Integer.toString(minas_cerca) + reset;
+                    }
                 }
             }
         }
@@ -145,67 +145,73 @@ public class Campominas {
     }
 
     public void despejar_vacio(int fila, int columna) {
-        if (this.campo[fila][columna].equals(" ")) {
-            if (fila == 0) {
-                if (columna == 0) {
+        if (this.campo[fila][columna].equals(" ")|| this.campo[fila][columna].equals("X")) {
+            primermov = false;
+            String comlados = lados(fila,columna);
+            switch (comlados){
+                case "f0c0":
                     for (int i = 0; i <= fila + 1; i++) { //Posicion esquina superior izquierda
-                        for (int j = 0; j <= columna + 1; j++) {
-                            despejar_campo(i, j);
+                        for (int j = 0; j <= columna+1; j++) {
+                            despejar_campo(i,j);
                         }
                     }
-                } else if (columna + 1 == this.campominas[1].length) {//posicion esquina superior derecha
+                    break;
+                case "f0c1": //fila 0,columna cualquiera
+                    for (int i = 0; i <= fila + 1; i++) {
+                        for (int j = columna - 1; j <= columna+1; j++) {
+                            despejar_campo(i,j);
+                        }
+                    }
+                    break;
+                case "f0c2": //posicion esquina superior derecha
                     for (int i = 0; i <= fila + 1; i++) {
                         for (int j = columna - 1; j <= columna; j++) {
-                            despejar_campo(i, j);
+                            despejar_campo(i,j);
                         }
                     }
-                } else {//columna normal
-                    for (int i = 0; i <= fila + 1; i++) {
-                        for (int j = columna - 1; j <= columna; j++) {
-                            despejar_campo(i, j);
+                    break;
+                case "f1c0":
+                    for (int i = fila - 1; i <= fila + 1; i++) {  //columna 0
+                        for (int j = 0; j <= columna+1; j++) {
+                            despejar_campo(i,j);
                         }
                     }
-                }
-            } else if (fila + 1 == this.campominas.length) { //Posicion esquina inferior izquierda
-                if (columna == 0) {
-                    for (int i = fila - 1; i <= fila; i++) {
-                        for (int j = 0; j <= columna; j++) {
-                            despejar_campo(i, j);
-                        }
-                    }
-                } else if (columna + 1 == this.campominas[1].length) {//Posicion esquina inferior derecha
-                    for (int i = fila - 1; i <= fila; i++) {
-                        for (int j = columna - 1; j <= columna; j++) {
-                            despejar_campo(i, j);
-                        }
-                    }
-                } else {//Por si la columna es normal
-                    for (int i = fila - 1; i <= fila; i++) {
-                        for (int j = columna - 1; j <= columna; j++) {
-                            despejar_campo(i, j);
-                        }
-                    }
-                }
-            } else {
-                if (columna == 0) {
-                    for (int i = fila - 1; i <= fila + 1; i++) {
-                        for (int j = 0; j <= columna; j++) {
-                            despejar_campo(i, j);
-                        }
-                    }
-                } else if (columna + 1 == this.campominas[1].length) {
-                    for (int i = fila - 1; i <= fila + 1; i++) {
-                        for (int j = columna - 1; j <= columna; j++) {
-                            despejar_campo(i, j);
-                        }
-                    }
-                } else {
+                    break;
+                case "f1c1":
                     for (int i = fila - 1; i <= fila + 1; i++) {
                         for (int j = columna - 1; j <= columna + 1; j++) {
-                            despejar_campo(i, j);
+                            despejar_campo(i,j);
                         }
                     }
-                }
+                    break;
+                case "f1c2":
+                    for (int i = fila - 1; i <= fila + 1; i++) {
+                        for (int j = columna - 1; j <= columna; j++) {
+                            despejar_campo(i,j);
+                        }
+                    }
+                    break;
+                case "f2c0":
+                    for (int i = fila - 1; i <= fila; i++) {
+                        for (int j = 0; j <= columna; j++) {
+                            despejar_campo(i,j);
+                        }
+                    }
+                    break;
+                case "f2c1":
+                    for (int i = fila - 1; i <= fila; i++) {
+                        for (int j = columna - 1; j <= columna+1; j++) {
+                            despejar_campo(i,j);
+                        }
+                    }
+                    break;
+                case "f2c2":
+                    for (int i = fila - 1; i <= fila; i++) {
+                        for (int j = columna - 1; j <= columna; j++) {
+                            despejar_campo(i,j);
+                        }
+                    }
+                break;
             }
         }
     }
@@ -242,11 +248,12 @@ public class Campominas {
     public boolean poner_bandera(int fila, int columna) {
         boolean colocada = false;
         if (this.campo[fila][columna].equals("X")) {
-            this.campo[fila][columna] = "!";
+            this.campo[fila][columna] = "\033[34m!\u001B[0m";
             colocada = true;
             this.banderas--;
             return colocada;
         }
+
         return colocada;
     }
 
@@ -367,8 +374,8 @@ public class Campominas {
                 }
                 break;
             case "f1c0":
-                for (int i = fila - 1; i <= fila + 1; i++) {
-                    for (int j = 0; j <= columna; j++) {
+                for (int i = fila - 1; i <= fila + 1; i++) { //columna 0
+                    for (int j = 0; j <= columna+1; j++) {
                         if (this.campominas[i][j] == true) {
                             minas_cerca++;
 
@@ -433,13 +440,13 @@ public class Campominas {
     public String lados(int fila, int columna) {
         String devolver="f1c1";
         if (fila == 0) {
-            if (columna == 0) {
+            if (columna == 0) {  //posicion esquina superior izquierda
                 devolver = "f0c0";
                 return devolver;
-            } else if (columna + 1 == this.campominas[1].length) {//posicion esquina superior derecha
+            } else if (columna + 1 == this.campominas[1].length) { //posicion esquina superior derecha
                 devolver = "f0c2";
                 return devolver;
-            } else {//columna normal
+            } else {//fila 0, columna cualquiera
                 devolver = "f0c1";
                 return devolver;
             }
@@ -448,17 +455,47 @@ public class Campominas {
                 devolver = "f2c0";
             } else if (columna + 1 == this.campominas[1].length) {//posicion esquina superior derecha
                 devolver = "f2c2";
-            } else {//columna normal
+            } else {//fila 8 columna  cualquiera
                 devolver = "f2c1";
             }
-        } else if (columna + 1 == this.campominas[1].length) {//Posicion esquina inferior derecha
+        } else if (columna + 1 == this.campominas[1].length) {
             devolver= "f1c2";
             return devolver;
         } else if (columna == 0) {
-        devolver="f1c0";
+        devolver="f1c0"; //
         return devolver;
         }//En caso de que la fila este entre la minima y la maxima
         return devolver;
     }
-
+    public boolean comprueba_final(int selectordif){
+        if(this.banderas == 0){
+        int a;
+        int b;
+        if(selectordif == 1){
+            a = 8;
+            b = 8;
+        }
+        else if(selectordif == 2){
+            a = 14;
+            b = 14;
+        }
+        else{
+            a = 20;
+            b = 20;
+        }
+        for(int i = 0; i<=a;i++){
+            for(int j = 0; j<=b;j++){
+                if(campominas[i][j] == true && campo[i][j].contains("!")){
+                    contadoruni++;
+                }
+            }
+        }
+        if(contadoruni == this.minas){
+            System.out.println("Fin de la partida, Feliciades Ganaste");
+            return true;
+        }
+        }
+        return false;
+    }
 }
+
