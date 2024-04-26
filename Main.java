@@ -29,9 +29,13 @@ public class Main {
                                 salir = false;
                             }
 
-                            do{fila = Utilidades.leenumerofiladel1al8(selecdificultad)-1;}
+                           do{
+                                System.out.println("¿Que fila deseas seleccionar?");
+                                fila = Utilidades.leenumerofilacolumna(selecdificultad)-1;}
                             while (fila==-1);
-                            do{columna = Utilidades.leenumerocolumnadel1al8(selecdificultad)-1;}
+                            do{
+                                System.out.println("¿Que columna deseas seleccionar?");
+                                columna = Utilidades.leenumerofilacolumna(selecdificultad)-1;}
                             while (columna==-1);
 
                             c1.imprimirconseleccion(fila, columna);
