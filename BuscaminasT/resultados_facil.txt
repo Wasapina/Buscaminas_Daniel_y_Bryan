@@ -1,0 +1,8 @@
+nombre: pepe tiempo: 1 minutos
+nombre: pepe tiempo: 1 minutos
+nombre: pepe tiempo: 1 minutos
+nombre: pepe tiempo: -1 minutos
+nombre: pepe tiempo: 1 minutos
+nombre: pepe tiempo: 5 minutos
+nombre: pepe2 tiempo: 5 minutos
+nombre: bryan tiempo: 5 minutos
